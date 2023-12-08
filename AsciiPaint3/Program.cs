@@ -78,6 +78,7 @@
             PaletteDrawFG(palettePosX);
             PaletteDrawBG(palettePosX, palettePosY);
             DrawAreaFrame(drawAreaWidth, drawAreaHeight, drawAreaFrameStartX, drawAreaFrameStartY);
+            //DrawAreaFrame(drawAreaWidth - 1, drawAreaHeight - 1, drawAreaFrameStartX, drawAreaFrameStartY);
             Console.ForegroundColor = ConsoleColor.Cyan;
             DrawHistoryFrame(drawAreaWidth, drawAreaHeight, drawAreaFrameStartX, drawAreaFrameStartY);
             Console.ForegroundColor = ConsoleColor.Red;
@@ -304,11 +305,14 @@
                 {
                     Console.CursorTop = i + 1;
                     Console.CursorLeft = j + 1;
-                    int colorFG = int.Parse(drawing[i, j, 1]);
-                    int colorBG = int.Parse(drawing[i, j, 2]);
-                    Console.ForegroundColor = (ConsoleColor)colorFG;
-                    Console.BackgroundColor = (ConsoleColor)colorBG;
-                    Console.Write(drawing[i, j, 0]);
+                    if (drawing[i, j, 1] != null && drawing[i, j, 2]  != null)
+                    {
+                        int colorFG = int.Parse(drawing[i, j, 1]);
+                        int colorBG = int.Parse(drawing[i, j, 2]);
+                        Console.ForegroundColor = (ConsoleColor)colorFG;
+                        Console.BackgroundColor = (ConsoleColor)colorBG;
+                        Console.Write(drawing[i, j, 0]);
+                    }
                 }
                 Console.WriteLine();
             }
@@ -317,11 +321,15 @@
         {
             int i = Console.CursorTop - 1;
             int j = Console.CursorLeft - 1;
-            int colorFG = int.Parse(drawing[i, j, 1]);
-            int colorBG = int.Parse(drawing[i, j, 2]);
-            Console.ForegroundColor = (ConsoleColor)colorFG;
-            Console.BackgroundColor = (ConsoleColor)colorBG;
-            Console.Write(drawing[i, j, 0]);
+
+            if (drawing[i, j, 1] != null && drawing[i, j, 2] != null)
+            {
+                int colorFG = int.Parse(drawing[i, j, 1]);
+                int colorBG = int.Parse(drawing[i, j, 2]);
+                Console.ForegroundColor = (ConsoleColor)colorFG;
+                Console.BackgroundColor = (ConsoleColor)colorBG;
+                Console.Write(drawing[i, j, 0]);
+            }
         }
         static string[,,] KeysInput(string[,,] drawing, string[] allPixels, int palettePosX, int palettePosY, int drawAreaHeight, int drawAreaWidth, int allStrings)
         {
@@ -1699,8 +1707,8 @@
                 '╚', // 4
                 '╝', // 5
                 };
-            drawAreaWidth = drawAreaWidth + 1;
-            drawAreaHeight = drawAreaHeight + 1;
+            //drawAreaWidth = drawAreaWidth + 1;
+            //drawAreaHeight = drawAreaHeight + 1;
 
             // Line 1
             Console.SetCursorPosition(drawAreaFrameStartX, drawAreaFrameStartY);
