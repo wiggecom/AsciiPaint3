@@ -828,14 +828,13 @@
                     rememberBG = drawing[row, col, 2];
                     rememberPosX = Console.CursorLeft;
                     rememberPosY = Console.CursorTop;
-                    //drawing[row, col, 0] = characterPlot;
-                    //drawing[row, col, 1] = colorSelectFG;
-                    //drawing[row, col, 2] = colorSelectBG;
+                    int tmpFG = int.Parse(colorSelectFG);
+                    int tmpBG = int.Parse(colorSelectBG);
                     cursorPosX = col + 1;
                     cursorPosY = row + 1;
-                    FloodFill(drawing, row, col);
-                    Console.SetCursorPosition(rememberPosX, rememberPosY);
-                    DrawDrawing(drawing);
+                    FloodFill(drawing, row, col, tmpFG, tmpBG);
+                    //Console.SetCursorPosition(rememberPosX, rememberPosY);
+                    //DrawDrawing(drawing);
                     Console.SetCursorPosition(rememberPosX, rememberPosY);
                     break;
                 }//  FloodFill
@@ -1217,7 +1216,7 @@
             }
             return drawing;
         }
-        static void FloodFill(string[,,] drawing, int row, int col)
+        static void FloodFill(string[,,] drawing, int row, int col, int tmpFG, int tmpBG)
         {
             if (row >= 0 && row <= drawing.GetLength(0) - 1 && col >= 0 && col <= drawing.GetLength(1) - 1)
             {
@@ -1230,22 +1229,28 @@
                             drawing[row, col, 0] = characterPlot;
                             drawing[row, col, 1] = colorSelectFG;
                             drawing[row, col, 2] = colorSelectBG;
+                            Console.SetCursorPosition(col+1, row+1);
+                            //int tmpFG = int.Parse(colorSelectFG);
+                            //int tmpBG = int.Parse(colorSelectBG);
+                            Console.ForegroundColor = (ConsoleColor)tmpFG;
+                            Console.BackgroundColor = (ConsoleColor)tmpBG;
+                            Console.Write(characterPlot);
                             //UpdateDrawing(drawing);
                             if (row >= 0 && row < drawing.GetLength(0) && col >= 0 && col < drawing.GetLength(1))
                             {
-                                FloodFill(drawing, row + 1, col);
+                                FloodFill(drawing, row + 1, col, tmpFG, tmpBG);
                             }
                             if (row >= 1 && row < drawing.GetLength(0) && col >= 0 && col < drawing.GetLength(1))
                             {
-                                FloodFill(drawing, row - 1, col);
+                                FloodFill(drawing, row - 1, col, tmpFG, tmpBG);
                             }
                             if (row >= 0 && row < drawing.GetLength(0) && col >= 0 && col < drawing.GetLength(1))
                             {
-                                FloodFill(drawing, row, col + 1);
+                                FloodFill(drawing, row, col + 1, tmpFG, tmpBG);
                             }
                             if (row >= 0 && row < drawing.GetLength(0) && col >= 0 && col < drawing.GetLength(1))
                             {
-                                FloodFill(drawing, row, col - 1);
+                                FloodFill(drawing, row, col - 1, tmpFG, tmpBG);
                             }
                         }
                     }
@@ -1330,18 +1335,6 @@
             rememberPosX = Console.CursorLeft;
             rememberPosY = Console.CursorTop;
         }
-        //static void JustBoom()
-        //{
-        //    Console.BackgroundColor = ConsoleColor.Black;
-        //    Console.CursorVisible = false;
-        //    Console.Clear();
-        //    while (true)
-        //    {
-        //        Boom();
-        //    }
-        //    Console.ForegroundColor = ConsoleColor.Green;
-        //    Console.BackgroundColor = ConsoleColor.Black;
-        //}
         static void RestorePixelInfo()
         {
             colorSelectFG = rememberFG;
