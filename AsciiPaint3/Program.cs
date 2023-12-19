@@ -26,8 +26,8 @@
         // Full Frame 3, 50, 200
         //Skull etc: 27, 87
 
-        public static int drawAreaHeight = 51;  //  37 // 50
-        public static int drawAreaWidth = 201;  // 157 // 200
+        public static int drawAreaHeight = 40;  //  37 // 50
+        public static int drawAreaWidth = 120;  // 157 // 200
         public static int palettePosX = 1; // Place palette anywhere
         public static int palettePosY = drawAreaHeight + 3;
 
@@ -107,7 +107,7 @@
                     {
                         for (int k = 0; k < drawing.GetLength(2); k++)
                         {
-                            drawing[i, j, k] = allPixels[x];
+                                drawing[i, j, k] = allPixels[x];
                             x++;
                         }
                     }
@@ -165,7 +165,7 @@
             // Add code to handle positioning and information
             pixelRowList.Add("public static void " + nameDrawing + "(int gfxLeft, int gfxTop)");
             pixelRowList.Add("{");
-            pixelRowList.Add("// columns: " + arrayColumns + ", rows: " + (arrayRows - 1) + ".");
+            pixelRowList.Add("// columns: " + arrayColumns+1 + ", rows: " + (arrayRows) + ".");
 
             string[] pixel = new string[3]; // one pixel to pick up char and colors
 
@@ -885,8 +885,8 @@
                     rememberPosX = Console.CursorLeft;
                     rememberPosY = Console.CursorTop;
                     drawing[row, col, 0] = null;
-                    drawing[row, col, 1] = null;
-                    drawing[row, col, 2] = null;
+                    drawing[row, col, 1] = "0";
+                    drawing[row, col, 2] = "0";
                     Console.SetCursorPosition(col + 1, row + 1);
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Write(" ");
